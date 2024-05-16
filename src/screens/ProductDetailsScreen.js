@@ -4,17 +4,27 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  ToastAndroid,
 } from "react-native";
 import React, { useState } from "react";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import useCart from "../Store/useCart";
 
 const ProductDetailsScreen = ({ navigation, route }) => {
   const { product } = route.params;
   const [toggle, setToggle] = useState(false);
 
+  const cartStore = useCart();
+
   const handleCart = () => {
-    console.log("Added to Cart");
+    cartStore.addProduct(product);
+    ToastAndroid.showWithGravity(
+      "Added to Cart",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
+    navigation.navigate("Cart");
   };
 
   return (
@@ -93,6 +103,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     margin: 10,
+    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
   },

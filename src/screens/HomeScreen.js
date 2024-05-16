@@ -1,27 +1,33 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import ProductCard from "../components/ProductCard";
 import ProductsData from "../Data/ProductsData";
+import useCart from "../Store/useCart";
 
 const HomeScreen = ({ navigation }) => {
   const handleCartPress = () => {
     navigation.navigate("Cart");
   };
 
+  const cartStore = useCart();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View />
-        <Text style={styles.headerText}>Clothes</Text>
-        <FontAwesome
-          style={styles.icon}
-          name="shopping-cart"
-          size={24}
-          color="black"
-          onPress={handleCartPress}
-        />
+        <Text style={styles.headerText}>Shirts</Text>
+        <View style={styles.shoppingCart}>
+          <AntDesign
+            style={styles.icon}
+            name="shoppingcart"
+            size={32}
+            color="black"
+            onPress={handleCartPress}
+          />
+          <Text style={styles.totalCartItems}>{cartStore.totalQuantity()}</Text>
+        </View>
       </View>
       <FlatList
         data={ProductsData}
@@ -53,8 +59,20 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "bold",
   },
-  icon: {
-    alignSelf: "flex-end",
+  shoppingCart: {
+    alignItems: "center",
+  },
+  totalCartItems: {
+    position: "absolute",
+    right: -7,
+    top: -7,
+    backgroundColor: "black",
+    color: "white",
+    borderRadius: 50,
+    width: 20,
+    height: 20,
+    textAlign: "center",
+    fontSize: 16,
   },
   productsContainer: {
     marginTop: 10,
