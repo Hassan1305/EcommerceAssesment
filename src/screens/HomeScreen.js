@@ -11,10 +11,12 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate("Cart");
   };
 
+  // Get the cart store
   const cartStore = useCart();
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
         <View />
         <Text style={styles.headerText}>Shirts</Text>
@@ -29,6 +31,7 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.totalCartItems}>{cartStore.totalQuantity()}</Text>
         </View>
       </View>
+      {/* Products */}
       <FlatList
         data={ProductsData}
         numColumns={2}
